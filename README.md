@@ -112,6 +112,72 @@ If you need more options or need to browse via a reverse proxy, please read:
 
 <https://github.com/louislam/uptime-kuma/wiki/%F0%9F%94%A7-How-to-Install>
 
+---
+
+## 🚀 QuantMove Development & Deployment
+
+### Prerequisites
+
+- Node.js >= 20.4
+- Docker & Docker Compose
+- AWS CLI (configured with credentials)
+
+### Local Development
+
+```bash
+# Install dependencies, build frontend, and start with Docker Compose
+make up
+
+# Or run in background
+make up-detach
+
+# View logs
+make logs
+
+# Stop containers
+make down
+```
+
+### Build Docker Image
+
+```bash
+# Build for local testing (native platform)
+make build-image-local
+
+# Build for production (linux/amd64)
+make build-image
+```
+
+### Push to AWS ECR
+
+```bash
+# Repo default: production-qt-uptime
+
+# Build and push to ECR
+make push-ecr
+
+# Push with custom tag
+make push-ecr IMAGE_TAG=v1.0.0
+```
+
+### Configuration
+
+Default values can be overridden:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AWS_REGION` | `us-east-2` | AWS region |
+| `ECR_REPO` | `production-qt-uptime` | ECR repository name |
+| `IMAGE_TAG` | `latest` | Docker image tag |
+
+### All Available Commands
+
+```bash
+make help
+```
+
+---
+
 ## 🆙 How to Update
 
 Please read:

@@ -1,9 +1,15 @@
 services:
-  uptime-kuma:
-    image: louislam/uptime-kuma:2
+  quantmove-uptime:
+    container_name: quantmove-uptime
+    build:
+      context: .
+      dockerfile: docker/dockerfile
+      target: release
     restart: unless-stopped
     volumes:
       - ./data:/app/data
     ports:
       # <Host Port>:<Container Port>
       - "3001:3001"
+    environment:
+      - NODE_ENV=production

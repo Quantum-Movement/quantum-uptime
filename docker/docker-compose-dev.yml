@@ -1,13 +1,18 @@
 version: "3.8"
 
 services:
-  uptime-kuma:
-    container_name: uptime-kuma-dev
-    image: louislam/uptime-kuma:nightly2
+  quantmove-uptime:
+    container_name: quantmove-uptime-dev
+    build:
+      context: ..
+      dockerfile: docker/dockerfile
+      target: release
     volumes:
-      #- ./data:/app/data
+      - ../data:/app/data
       - ../server:/app/server
       - ../db:/app/db
     ports:
       - "3001:3001" # <Host Port>:<Container Port>
       - "3307:3306"
+    environment:
+      - NODE_ENV=development

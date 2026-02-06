@@ -1,0 +1,29 @@
+# Local development docker-compose
+# Usage: docker compose -f docker-compose.local.yml up --build
+
+services:
+  quantmove-uptime:
+    container_name: quantmove-uptime-local
+    build:
+      context: .
+      dockerfile: docker/dockerfile
+      target: release
+    restart: unless-stopped
+    volumes:
+      # Persist data
+      - ./data:/app/data
+      # Mount source for development (optional - uncomment for hot reload)
+      # - ./server:/app/server
+      # - ./src:/app/src
+      # - ./db:/app/db
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - UPTIME_KUMA_LOG_LEVEL=debug
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
