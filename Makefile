@@ -1,9 +1,9 @@
 .PHONY: help install build up down logs clean build-image push-ecr login-ecr
 
 # Configuration
-AWS_REGION ?= us-east-2
+AWS_REGION ?= us-west-2
 AWS_ACCOUNT_ID ?= $(shell aws sts get-caller-identity --query Account --output text)
-ECR_REPO ?= production-qt-uptime
+ECR_REPO ?= quantmove-uptime-production
 IMAGE_TAG ?= latest
 IMAGE_NAME = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com/$(ECR_REPO):$(IMAGE_TAG)
 

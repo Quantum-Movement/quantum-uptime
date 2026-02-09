@@ -151,7 +151,7 @@ make build-image
 ### Push to AWS ECR
 
 ```bash
-# Repo default: production-qt-uptime
+# Repo default: quantmove-uptime-production
 
 # Build and push to ECR
 make push-ecr
@@ -167,7 +167,7 @@ Default values can be overridden:
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `AWS_REGION` | `us-east-2` | AWS region |
-| `ECR_REPO` | `production-qt-uptime` | ECR repository name |
+| `ECR_REPO` | `quantmove-uptime-production` | ECR repository name |
 | `IMAGE_TAG` | `latest` | Docker image tag |
 
 ### All Available Commands

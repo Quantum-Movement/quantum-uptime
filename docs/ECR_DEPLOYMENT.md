@@ -12,8 +12,8 @@ This guide explains how to build and push the Quantmove Uptime Docker image to A
 
 | Environment | ECR Repository Name |
 |-------------|---------------------|
-| Production  | `production-qt-uptime` |
-| Staging     | `staging-qt-uptime` |
+| Production  | `quantmove-uptime-production` |
+| Staging     | `quantmove-uptime-staging` |
 
 ## Build and Push to ECR
 
@@ -24,7 +24,7 @@ This guide explains how to build and push the Quantmove Uptime Docker image to A
 export AWS_ACCOUNT_ID="your-account-id"
 export AWS_REGION="us-west-2"
 export ENVIRONMENT="production"  # or "staging"
-export ECR_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ENVIRONMENT}-qt-uptime"
+export ECR_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/quantmove-uptime-${ENVIRONMENT}"
 ```
 
 ### 2. Authenticate with ECR
@@ -63,7 +63,7 @@ set -e
 AWS_ACCOUNT_ID="694260482182"
 AWS_REGION="us-west-2"
 ENVIRONMENT="production"
-ECR_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ENVIRONMENT}-qt-uptime"
+ECR_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/quantmove-uptime-${ENVIRONMENT}"
 VERSION=$(git describe --tags --always 2>/dev/null || echo "latest")
 
 echo "Building Quantmove Uptime for ${ENVIRONMENT}..."
@@ -100,7 +100,7 @@ aws ssm start-session --target <instance-id>
 aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-west-2.amazonaws.com
 
 # 3. Pull the new image
-docker pull <account-id>.dkr.ecr.us-west-2.amazonaws.com/production-qt-uptime:latest
+docker pull <account-id>.dkr.ecr.us-west-2.amazonaws.com/quantmove-uptime-production:latest
 
 # 4. Restart the service
 sudo systemctl restart quantmove-uptime.service
@@ -112,7 +112,7 @@ curl http://localhost:3001/api/ping
 
 ## CI/CD Integration
 
-For GitHub Actions, see the workflow file at `.github/workflows/qt-uptime.yml`.
+For GitHub Actions, see the workflow file at `.github/workflows/quantmove-uptime.yml`.
 
 ## Troubleshooting
 
@@ -130,10 +130,10 @@ aws ecr get-login-password --region us-west-2 | docker login --username AWS --pa
 
 ```bash
 # Check if repository exists
-aws ecr describe-repositories --repository-names production-qt-uptime
+aws ecr describe-repositories --repository-names quantmove-uptime-production
 
 # Create repository if needed
-aws ecr create-repository --repository-name production-qt-uptime
+aws ecr create-repository --repository-name quantmove-uptime-production
 ```
 
 ### Permission Denied
